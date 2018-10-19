@@ -7,7 +7,7 @@ def most_accessed_article():
 	cursor = db.cursor()
 	try:
 		# query - retrieve articles and the amount of time they have been accessed
-		cursor.execute("select path, count(*) as views from log where path like '/article/%' group by path order by views desc limit 3;")
+		cursor.execute("select path, count(*) as views from log where path like '/article/%' and status = '200 OK' group by path order by views desc limit 3;")
 		rows = cursor.fetchall() # fetch results from database
 		if rows:
 			# loop through to display retrieved records
@@ -21,11 +21,12 @@ def most_accessed_article():
 
 # def most_popular_authors():
 # 	db = psycopg2.connect("dbname=news")
-#   cur = db.cursor()
-#   db.close()
-# 	article_name = "Lorem Ipsum Test Article"
-# 	views = 405
-# 	print('"{}" - {} views'.format(article_name, views))
+# 	cur = db.cursor()
+# 	try:
+
+# 		print('"{}" - {} views'.format(article_name, views))
+# 	finally:
+# 		db.close()
 
 # def days_with_errors():
 # 	db = psycopg2.connect("dbname=news")
