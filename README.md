@@ -1,4 +1,4 @@
-# Log Analysis Python Program
+# Log Analysis Program
 
 This a program written in python to carry out analysis on over 1 million log entries in a news site database. 
 The program reports business critical information.
