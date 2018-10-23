@@ -1,11 +1,12 @@
 #!/usr/bin/env python2.7
-
 import psycopg2
+
 
 def db_connect():
     """initiate connection to database"""
     db = psycopg2.connect("dbname=news")
     return db
+
 
 def most_accessed_article():
     """Most accessed articles of all time sorted in descending other."""
@@ -22,6 +23,7 @@ def most_accessed_article():
     finally:
         db.close()  # close database connection
 
+
 def most_popular_authors():
     """Most popular authors based on total article views per author."""
     try:
@@ -36,6 +38,7 @@ def most_popular_authors():
     finally:
         db.close()  # close database connection
 
+
 def days_with_errors():
     """Percentage error of total requests per day."""
     try:
@@ -49,6 +52,7 @@ def days_with_errors():
             print('{} - {}% errors'.format(i[0], i[1]))  # output text
     finally:
         db.close()  # close database connection
+
 
 # report header format
 print("\n")
