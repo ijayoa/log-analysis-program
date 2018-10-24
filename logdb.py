@@ -14,7 +14,12 @@ def most_accessed_article():
         db = db_connect()  # create database connection
         cursor = db.cursor()
         # query : articles and the amount of time they have been accessed
-        cursor.execute("select title, count(*) as views from articles, log where log.path like '/article/' ||  articles.slug and status = '200 OK' group by title order by views desc limit 3;")  # NOQA
+        cursor.execute("""select title, count(*) as views from articles, log
+            where log.path
+            like '/article/' ||  articles.slug and status = '200 OK'
+            group by title
+            order by views desc
+            limit 3;""")
         rows = cursor.fetchall()  # fetch results from database
         # loop through to display retrieved records
         for i in rows:
@@ -30,7 +35,11 @@ def most_popular_authors():
         db = db_connect()  # create database connection
         cursor = db.cursor()
         # query : retrieve author, find articles by them and count
-        cursor.execute("select authors.name, count(*) as views from authors inner join articles on authors.id = articles.author inner join log on status = '200 OK' and '/article/' || articles.slug = log.path group by authors.name order by views desc;")  # NOQA
+        cursor.execute("""select authors.name, count(*) as views from authors
+         inner join articles on authors.id = articles.author
+         inner join log
+         on status = '200 OK' and '/article/' || articles.slug = log.path
+         group by authors.name order by views desc;""")
         leaderboard = cursor.fetchall()  # fetch results from database
         # loop through to display retrieved records
         for i in leaderboard:
@@ -45,7 +54,11 @@ def days_with_errors():
         db = db_connect()  # create database connection
         cursor = db.cursor()
         # query:use log_report view to calculate percent daily errors > than 1
-        cursor.execute("select day, round(error * 100.0 / requests, 1) as percent from log_report group by  day,error,requests having round(error * 100.0 / requests, 1) > 1 order by percent desc;")  # NOQA
+        cursor.execute("""select day,
+            round(error * 100.0 / requests, 1) as percent from log_report
+            group by  day,error,requests
+            having round(error * 100.0 / requests, 1) > 1
+            order by percent desc;""")
         rows = cursor.fetchall()  # fetch results from database
         # loop through to display retrieved records
         for i in rows:
